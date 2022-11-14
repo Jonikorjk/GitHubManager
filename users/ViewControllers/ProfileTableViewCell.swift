@@ -10,55 +10,33 @@ import UIKit
 
 
 
-class UserDetailsTableViewController: UITableViewController {
+class ProfileTableViewCell: UITableViewController {
 
-    var user: User!
-    var sections: [UserDetailsSections] = [.fullNameAndPhoto, .birthday, .contactInfo, .adress]
-    
     var userInfo: Dictionary<UserDetailsSections, [UserInfo:String]>!
+    var sections: [UserDetailsSections] = [.fullNameAndPhoto, .birthday, .contactInfo, .adress]
+    var profile: Dictionary<String,String> = UserDefaults.standard.dictionary(forKey: "userProfile") as! Dictionary<String,String>
+//    var profile: Dictionary<String,String> = [:]
     
     override func loadView() {
         super.loadView()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/YYYY"
-        let birthday = dateFormatter.string(from: user.dob.date)
-    
-        userInfo = [
+        
+            userInfo = [
             .fullNameAndPhoto: [.birthday: ""], // for rowCount = 1 (check numberOfRowsInSection)
-            .birthday: [.birthday: birthday],
+            .birthday: [.birthday: profile["birthday"]!],
             .contactInfo: [
-                .email: user.email,
-                .phone: user.phone
+                .phone: profile["phone"]!,
+                .email: profile["email"]!
             ],
             .adress: [
-                .city: user.location.city,
-                .street: user.location.street.fullName,
+                .street: profile["street"]!,
+                .city: profile["city"]!
             ]
+        
         ]
-//
-//        var smth: Dictionary<String, String> = [
-//            "login": user.login.username,
-//            "password": user.login.password,
-//            "birthday": birthday,
-//            "phone": user.phone,
-//            "email": user.email,
-//            "street": user.location.street.fullName,
-//            "city": user.location.city,
-//            "photo": user.picture.large,
-//            "firstName": user.name.first,
-//            "lastName": user.name.last
-//        ]
-//        let ud = UserDefaults.standard
-//        ud.set(smth, forKey: "userProfile")
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBarController?.tabBar.isHidden = true
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -91,24 +69,23 @@ class UserDetailsTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RequsitesTableViewCell", for: indexPath) as! RequsitesTableViewCell
-            cell.firstNameLabel.text = user.name.first
-            cell.lastNameLabel.text = user.name.last
-            
-            guard let userPhotoUrl = URL(string: user.picture.large) else {
+            cell.firstNameLabel.text = profile["firstName"]
+            cell.lastNameLabel.text = profile["lastName"]
+            guard let userPhotoUrl = URL(string: profile["photo"]!) else {
                 fatalError("failed to get url user's photo")
             }
             
             let session = URLSession.shared
-            session.dataTask(with: userPhotoUrl) {data, _, _ in
-            guard let imageData = data else { return }
-            DispatchQueue.main.async {
-                cell.photoImageView.image = UIImage(data: imageData)
-            }
-                
+            session.dataTask(with: userPhotoUrl) { data, _, _ in
+                guard let data = data else { return }
+                DispatchQueue.main.async {
+                    cell.photoImageView.image = UIImage(data: data)
+                }
             }.resume()
-            
+        
             tableView.rowHeight = 150
             cell.isUserInteractionEnabled = false
+
             return cell
             
         default:
@@ -143,7 +120,7 @@ class UserDetailsTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     */
 

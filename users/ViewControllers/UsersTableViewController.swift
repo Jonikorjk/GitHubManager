@@ -14,17 +14,15 @@ class UsersTableViewController: UITableViewController {
         
     override func loadView() {
         super.loadView()
-        let url = "https://randomuser.me/api/?results=50"
-    
+        let url = "https://randomuser.me/api/?results=200"
         parseJSON(url: url) {
             self.tableView.reloadData()
         }
         
-//        
+//
 //        tabBarController?.tabBarItem = UITabBarItem(title: "Users", image: UIImage(systemName: "person"), tag: 0)
 //        tabBarController?.tabBarItem = UITabBarItem(title: "Users", image: UIImage(systemName: "person"), tag: 1)
 //        tabBarController?.setViewControllers([self, UserDetailsTableViewController()], animated: true)
-
         
     }
     
@@ -42,7 +40,7 @@ class UsersTableViewController: UITableViewController {
             fatalError("Failed to get api url")
         }
         let session = URLSession.shared
-        let data = session.dataTask(with: apiUrl) { data, response, error in
+        session.dataTask(with: apiUrl) { data, response, error in
             guard error == nil, data != nil else { return }
             
             
@@ -57,7 +55,6 @@ class UsersTableViewController: UITableViewController {
             do {
                 let parsedUsers = try decoder.decode(Users.self, from: data!)
                 self.users = parsedUsers.results // results storing [User]
-                print(self.users)
                 DispatchQueue.main.async {
                     completiton()
                 }
@@ -73,7 +70,7 @@ class UsersTableViewController: UITableViewController {
         super.viewDidLoad()
         
         
-        
+
         tableView.rowHeight = 80
         
         
@@ -115,13 +112,14 @@ class UsersTableViewController: UITableViewController {
         guard let imageUrl = URL(string: currentUser.picture.medium) else {
             fatalError("failed to get image url")
         }
-        do {
-            let imageData = try Data(contentsOf: imageUrl)
-            cell.photoImageView.image = UIImage(data: imageData)
-        } catch {
-            fatalError("failed to get image data")
-        }
         
+        let session = URLSession.shared
+        session.dataTask(with: imageUrl) {data, _, _ in
+            guard let dataImage = data else { return }
+            DispatchQueue.main.async {
+                cell.photoImageView.image = UIImage(data: dataImage)
+            }
+        }.resume()
         return cell
     }
     

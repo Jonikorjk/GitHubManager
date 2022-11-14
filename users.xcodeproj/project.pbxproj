@@ -25,6 +25,7 @@
 		CE4D5762292008B800AF41BD /* RequsitesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4D5761292008B800AF41BD /* RequsitesTableViewCell.swift */; };
 		CE4D576429200E3E00AF41BD /* PersonalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4D576329200E3E00AF41BD /* PersonalInfo.swift */; };
 		CE4D576629201F0A00AF41BD /* UserDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4D576529201F0A00AF41BD /* UserDetailsTableViewCell.swift */; };
+		CEBE9A6029227F3C00944A6E /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBE9A5F29227F3C00944A6E /* ProfileTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		CE4D5761292008B800AF41BD /* RequsitesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequsitesTableViewCell.swift; sourceTree = "<group>"; };
 		CE4D576329200E3E00AF41BD /* PersonalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfo.swift; sourceTree = "<group>"; };
 		CE4D576529201F0A00AF41BD /* UserDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		CEBE9A5F29227F3C00944A6E /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 				CE4D575F292007F400AF41BD /* UserDetailsTableViewController.swift */,
 				CE48B81F291BBA7F00B50DA0 /* ViewController.swift */,
 				CE48B84C291BBAD400B50DA0 /* Validation.swift */,
+				CEBE9A5F29227F3C00944A6E /* ProfileTableViewCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				CE4D5758291D117600AF41BD /* UsersTableViewController.swift in Sources */,
 				CE4D575B291D11CD00AF41BD /* UserTableViewCell.swift in Sources */,
 				CE48B81E291BBA7F00B50DA0 /* SceneDelegate.swift in Sources */,
+				CEBE9A6029227F3C00944A6E /* ProfileTableViewCell.swift in Sources */,
 				CE4D576629201F0A00AF41BD /* UserDetailsTableViewCell.swift in Sources */,
 				CE4D575E291D399800AF41BD /* User.swift in Sources */,
 			);
