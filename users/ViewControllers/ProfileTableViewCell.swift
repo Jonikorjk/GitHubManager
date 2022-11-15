@@ -19,7 +19,8 @@ class ProfileTableViewCell: UITableViewController {
     
     override func loadView() {
         super.loadView()
-        
+//        KeyChainClass.save(profile["password"]!.data(using: .utf8)!, service: "usersManager", account: profile["login"]!)
+
             userInfo = [
             .fullNameAndPhoto: [.birthday: ""], // for rowCount = 1 (check numberOfRowsInSection)
             .birthday: [.birthday: profile["birthday"]!],

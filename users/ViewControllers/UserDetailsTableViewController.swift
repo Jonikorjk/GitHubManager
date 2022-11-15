@@ -8,8 +8,6 @@
 import UIKit
 
 
-
-
 class UserDetailsTableViewController: UITableViewController {
 
     var user: User!
@@ -72,7 +70,7 @@ class UserDetailsTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of sections
         return sections.count
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         guard let info = userInfo[sections[section]] else {

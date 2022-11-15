@@ -18,12 +18,6 @@ class UsersTableViewController: UITableViewController {
         parseJSON(url: url) {
             self.tableView.reloadData()
         }
-        
-//
-//        tabBarController?.tabBarItem = UITabBarItem(title: "Users", image: UIImage(systemName: "person"), tag: 0)
-//        tabBarController?.tabBarItem = UITabBarItem(title: "Users", image: UIImage(systemName: "person"), tag: 1)
-//        tabBarController?.setViewControllers([self, UserDetailsTableViewController()], animated: true)
-        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -69,7 +63,10 @@ class UsersTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let profile = UserDefaults.standard.dictionary(forKey: "userProfile") as! Dictionary<String, String>
         
+
+//        KeyChainClass.save(profile["password"]!.data(using: .utf8)!, service: "usersManager", account: profile["login"]!)
 
         tableView.rowHeight = 80
         
