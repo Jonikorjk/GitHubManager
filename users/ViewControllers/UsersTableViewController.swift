@@ -11,13 +11,17 @@ import UIKit
 class UsersTableViewController: UITableViewController {
     var users: [User] = []
     
-        
     override func loadView() {
         super.loadView()
         let url = "https://randomuser.me/api/?results=200"
         parseJSON(url: url) {
             self.tableView.reloadData()
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.rowHeight = 80
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -28,57 +32,6 @@ class UsersTableViewController: UITableViewController {
         navigationController?.pushViewController(userDetailsVC, animated: true)
     }
     
-    func parseJSON(url: String, _ completiton: @escaping () -> Void) {
-        
-        guard let apiUrl = URL(string: url) else {
-            fatalError("Failed to get api url")
-        }
-        let session = URLSession.shared
-        session.dataTask(with: apiUrl) { data, response, error in
-            guard error == nil, data != nil else { return }
-            
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-            
-            
-            
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .formatted(formatter)
-            
-            do {
-                let parsedUsers = try decoder.decode(Users.self, from: data!)
-                self.users = parsedUsers.results // results storing [User]
-                DispatchQueue.main.async {
-                    completiton()
-                }
-                
-            } catch {
-                print(error)
-            }
-        }.resume()
-        
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let profile = UserDefaults.standard.dictionary(forKey: "userProfile") as! Dictionary<String, String>
-        
-
-//        KeyChainClass.save(profile["password"]!.data(using: .utf8)!, service: "usersManager", account: profile["login"]!)
-
-        tableView.rowHeight = 80
-        
-        
-        
-         // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -91,8 +44,6 @@ class UsersTableViewController: UITableViewController {
         return users.count
     }
 
-    
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserTableViewCell
         let currentUser = users[indexPath.row]
@@ -120,7 +71,36 @@ class UsersTableViewController: UITableViewController {
         return cell
     }
     
-
+    private func parseJSON(url: String, _ completiton: @escaping () -> Void) {
+        guard let apiUrl = URL(string: url) else {
+            fatalError("Failed to get api url")
+        }
+        
+        let session = URLSession.shared
+        session.dataTask(with: apiUrl) { data, response, error in
+            guard error == nil, data != nil else { return }
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .formatted(formatter)
+            
+            do {
+                let parsedUsers = try decoder.decode(Users.self, from: data!)
+                self.users = parsedUsers.results // results storing [User]
+                DispatchQueue.main.async {
+                    completiton()
+                }
+            } catch {
+                print(error)
+            }
+        }.resume()
+        
+    }
+    
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

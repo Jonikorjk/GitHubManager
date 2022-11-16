@@ -9,7 +9,6 @@ import UIKit
 
 class SignUpViewController: UIViewController {
 
-    
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var confirmPasswordTextField: UITextField!
@@ -18,39 +17,39 @@ class SignUpViewController: UIViewController {
     @IBOutlet var errorPasswordLabel: UILabel!
     @IBOutlet var errorConfirmPasswordLabel: UILabel!
     
-    
     @IBOutlet var signUpButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        Validation.toHide(errorEmailLabel, errorPasswordLabel, errorConfirmPasswordLabel)
     }
     
     @IBAction func editingChangedEmailTextField(_ sender: Any?) {
-        
+        _ = Validation.hideOrShowErrorLabel(textField: emailTextField, errorLabel: errorEmailLabel, .email)
     }
     
     @IBAction func editingChangedPasswordTextField(_ sender: Any?) {
-        
+        _ = Validation.hideOrShowErrorLabel(textField: passwordTextField, errorLabel: errorPasswordLabel, .password)
     }
     
     @IBAction func editingChangerConfirmPasswordTextField(_ sender: Any?) {
-        
+        _ = Validation.isPasswordsSimillar(passwordTextField, confirmPasswordTextField, errorConfirmPasswordLabel)
     }
     
     @IBAction func pressedSignUpButton(_ sender: Any?) {
-        
+        if Validation.hideOrShowErrorLabel(textField: emailTextField, errorLabel: errorEmailLabel, .email)          ||
+           Validation.hideOrShowErrorLabel(textField: passwordTextField, errorLabel: errorPasswordLabel, .password) ||
+           Validation.isPasswordsSimillar(passwordTextField, confirmPasswordTextField, errorConfirmPasswordLabel) {
+            
+            guard let passwordData = passwordTextField.text!.data(using: .utf8) else {
+                print("failed convert password to data")
+                return
+            }
+            
+            KeyChainClass.save(passwordData, service: "usersTable", account: emailTextField.text!)
+            performSegue(withIdentifier: "toMainStoryBoardFromSignUp", sender: nil)
+        }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -20,7 +20,7 @@ class KeyChainClass {
         let saveStatus = SecItemAdd(query, nil)
         
         if saveStatus != errSecSuccess {
-            print("Error: \(saveStatus)")
+            fatalError("Error: \(saveStatus)")
         }
         
         if saveStatus == errSecDuplicateItem {
@@ -36,7 +36,11 @@ class KeyChainClass {
         ] as CFDictionary
         
         let updatedData = [kSecValueData: data] as CFDictionary
-        SecItemUpdate(query, updatedData)
+        let updateStatus = SecItemUpdate(query, updatedData)
+        if updateStatus != errSecSuccess {
+            fatalError("failed to update keychain \(updateStatus)")
+        }
+        
         
     }
     

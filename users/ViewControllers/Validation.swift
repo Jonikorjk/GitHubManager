@@ -54,8 +54,13 @@ class Validation {
 //        return text.range(of: type.rawValue, options: .regularExpression) != nil ? true : false
 //    }
     
-    static public func isPasswordsSimillar(_ password: String?, _ confirmPassword: String?) -> Bool {
-        return (password == confirmPassword) && (password != "")
+    static public func isPasswordsSimillar(_ password: UITextField, _ confirmPassword: UITextField, _ errorConfirmPasswordLabel: UILabel) -> Bool {
+        var isCorrect = true
+        guard let password = password.text, let confirmPassword = confirmPassword.text else { errorConfirmPasswordLabel.isHidden = false; return false }
+        isCorrect = (password == confirmPassword) && (password != "")
+        errorConfirmPasswordLabel.isHidden = isCorrect ? true : false
+        return isCorrect
+        
     }
     
     static public func hideOrShowErrorLabel(textField: UITextField, errorLabel: UILabel, _ validateBy: ValidationType) -> Bool {
