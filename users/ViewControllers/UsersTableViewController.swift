@@ -13,7 +13,11 @@ class UsersTableViewController: UITableViewController {
     
     override func loadView() {
         super.loadView()
-        let url = "https://randomuser.me/api/?results=200"
+//        let downloadUsers = DownloadUsers()
+//        downloadUsers.downloadUsers(amountOfUsers: 15)
+//        users = downloadUsers.users
+//
+        let url = "https://randomuser.me/api/?results=100"
         parseJSON(url: url) {
             self.tableView.reloadData()
         }
@@ -23,6 +27,8 @@ class UsersTableViewController: UITableViewController {
         super.viewDidLoad()
         tableView.rowHeight = 80
     }
+    
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let userDetailsVC = storyboard?.instantiateViewController(withIdentifier: "UserDetailsTableViewController") as? UserDetailsTableViewController else {
@@ -96,7 +102,6 @@ class UsersTableViewController: UITableViewController {
                 print(error)
             }
         }.resume()
-        
     }
     
     

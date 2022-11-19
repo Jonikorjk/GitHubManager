@@ -9,51 +9,44 @@ import UIKit
 
 
 
-
 class ProfileTableViewCell: UITableViewController {
-
     var userInfo: Dictionary<UserDetailsSections, [UserInfo:String]>!
     var sections: [UserDetailsSections] = [.fullNameAndPhoto, .birthday, .contactInfo, .adress]
-    var profile: Dictionary<String,String> = UserDefaults.standard.dictionary(forKey: "userProfile") as! Dictionary<String,String>
-//    var profile: Dictionary<String,String> = [:]
+    var profile: Dictionary<String,String> = UserDefaults.standard.dictionary(forKey: Service.keyForUserDefaults.rawValue) as! Dictionary<String,String>
+    
+    private func convertBase64StringToImage(imageBase64String: String) -> UIImage? {
+        guard let imageData = Data(base64Encoded: imageBase64String) else { return nil }
+        let image = UIImage(data: imageData)
+        return image
+    }
     
     override func loadView() {
         super.loadView()
-//        KeyChainClass.save(profile["password"]!.data(using: .utf8)!, service: "usersManager", account: profile["login"]!)
-
             userInfo = [
             .fullNameAndPhoto: [.birthday: ""], // for rowCount = 1 (check numberOfRowsInSection)
-            .birthday: [.birthday: profile["birthday"]!],
+            .birthday: [.birthday: profile[UserInfo.birthday.rawValue]!],
             .contactInfo: [
-                .phone: profile["phone"]!,
-                .email: profile["email"]!
+                .phone: profile[UserInfo.phone.rawValue]!,
+                .email: profile[UserInfo.email.rawValue]!
             ],
             .adress: [
-                .street: profile["street"]!,
-                .city: profile["city"]!
+                .street: profile[UserInfo.street.rawValue]!,
+                .city: profile[UserInfo.city.rawValue]!
             ]
-        
         ]
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         guard let info = userInfo[sections[section]] else {
             return 0
         }
@@ -65,28 +58,14 @@ class ProfileTableViewCell: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RequsitesTableViewCell", for: indexPath) as! RequsitesTableViewCell
-            cell.firstNameLabel.text = profile["firstName"]
-            cell.lastNameLabel.text = profile["lastName"]
-            guard let userPhotoUrl = URL(string: profile["photo"]!) else {
-                fatalError("failed to get url user's photo")
-            }
-            
-            let session = URLSession.shared
-            session.dataTask(with: userPhotoUrl) { data, _, _ in
-                guard let data = data else { return }
-                DispatchQueue.main.async {
-                    cell.photoImageView.image = UIImage(data: data)
-                }
-            }.resume()
-        
+            cell.firstNameLabel.text = profile[UserInfo.firstName.rawValue]
+            cell.lastNameLabel.text = profile[UserInfo.lastName.rawValue]
+            cell.photoImageView.image = convertBase64StringToImage(imageBase64String: profile[UserInfo.photoData.rawValue]!)
             tableView.rowHeight = 150
             cell.isUserInteractionEnabled = false
-
             return cell
             
         default:

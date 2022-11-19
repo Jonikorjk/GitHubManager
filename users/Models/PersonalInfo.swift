@@ -20,4 +20,12 @@ enum UserInfo: String {
     case birthday = "Birthday"
     case city = "City"
     case street = "Street"
+    case firstName
+    case lastName
+    case photoData
+}
+
+enum Service: String {
+    case serviceName = "UsersTable"
+    case keyForUserDefaults = "UserProfile"
 }

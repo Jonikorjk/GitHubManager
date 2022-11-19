@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE36B6882923B7D6001FE9D7 /* KeyChainClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE36B6872923B7D6001FE9D7 /* KeyChainClass.swift */; };
+		CE00502229267DB700908B41 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE00502129267DB700908B41 /* ApiClient.swift */; };
+		CE0050242926C10F00908B41 /* DownloadUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0050232926C10F00908B41 /* DownloadUsers.swift */; };
+		CE0050292927FA2A00908B41 /* KeyboardLayoutGuide in Frameworks */ = {isa = PBXBuildFile; productRef = CE0050282927FA2A00908B41 /* KeyboardLayoutGuide */; };
+		CE36B6882923B7D6001FE9D7 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE36B6872923B7D6001FE9D7 /* KeyChainManager.swift */; };
 		CE36B68B2923CAA3001FE9D7 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE36B68A2923CAA3001FE9D7 /* UserDefaultsController.swift */; };
 		CE36B68D2923D995001FE9D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE36B68C2923D995001FE9D7 /* LoginViewController.swift */; };
 		CE36B68F29244A5D001FE9D7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE36B68E29244A5D001FE9D7 /* SignUpViewController.swift */; };
@@ -29,6 +32,7 @@
 		CE4D5762292008B800AF41BD /* RequsitesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4D5761292008B800AF41BD /* RequsitesTableViewCell.swift */; };
 		CE4D576429200E3E00AF41BD /* PersonalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4D576329200E3E00AF41BD /* PersonalInfo.swift */; };
 		CE4D576629201F0A00AF41BD /* UserDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4D576529201F0A00AF41BD /* UserDetailsTableViewCell.swift */; };
+		CE8ED30B292861E40011CF18 /* SignUpDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED30A292861E40011CF18 /* SignUpDetailsViewController.swift */; };
 		CEBE9A6029227F3C00944A6E /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBE9A5F29227F3C00944A6E /* ProfileTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +54,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CE36B6872923B7D6001FE9D7 /* KeyChainClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainClass.swift; sourceTree = "<group>"; };
+		CE00502129267DB700908B41 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		CE0050232926C10F00908B41 /* DownloadUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadUsers.swift; sourceTree = "<group>"; };
+		CE36B6872923B7D6001FE9D7 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		CE36B68A2923CAA3001FE9D7 /* UserDefaultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
 		CE36B68C2923D995001FE9D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CE36B68E29244A5D001FE9D7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +82,7 @@
 		CE4D5761292008B800AF41BD /* RequsitesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequsitesTableViewCell.swift; sourceTree = "<group>"; };
 		CE4D576329200E3E00AF41BD /* PersonalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfo.swift; sourceTree = "<group>"; };
 		CE4D576529201F0A00AF41BD /* UserDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		CE8ED30A292861E40011CF18 /* SignUpDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDetailsViewController.swift; sourceTree = "<group>"; };
 		CEBE9A5F29227F3C00944A6E /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE0050292927FA2A00908B41 /* KeyboardLayoutGuide in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,7 +115,7 @@
 		CE36B6862923B7C0001FE9D7 /* KeyChain */ = {
 			isa = PBXGroup;
 			children = (
-				CE36B6872923B7D6001FE9D7 /* KeyChainClass.swift */,
+				CE36B6872923B7D6001FE9D7 /* KeyChainManager.swift */,
 			);
 			path = KeyChain;
 			sourceTree = "<group>";
@@ -182,10 +190,10 @@
 				CE4D5757291D117600AF41BD /* UsersTableViewController.swift */,
 				CE4D575F292007F400AF41BD /* UserDetailsTableViewController.swift */,
 				CE48B81F291BBA7F00B50DA0 /* ViewController.swift */,
-				CE48B84C291BBAD400B50DA0 /* Validation.swift */,
 				CEBE9A5F29227F3C00944A6E /* ProfileTableViewCell.swift */,
 				CE36B68C2923D995001FE9D7 /* LoginViewController.swift */,
 				CE36B68E29244A5D001FE9D7 /* SignUpViewController.swift */,
+				CE8ED30A292861E40011CF18 /* SignUpDetailsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -203,8 +211,11 @@
 		CE4D575C291D398700AF41BD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CE48B84C291BBAD400B50DA0 /* Validation.swift */,
 				CE4D575D291D399800AF41BD /* User.swift */,
 				CE4D576329200E3E00AF41BD /* PersonalInfo.swift */,
+				CE00502129267DB700908B41 /* ApiClient.swift */,
+				CE0050232926C10F00908B41 /* DownloadUsers.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -225,6 +236,9 @@
 			dependencies = (
 			);
 			name = users;
+			packageProductDependencies = (
+				CE0050282927FA2A00908B41 /* KeyboardLayoutGuide */,
+			);
 			productName = users;
 			productReference = CE48B818291BBA7F00B50DA0 /* users.app */;
 			productType = "com.apple.product-type.application";
@@ -297,6 +311,9 @@
 				Base,
 			);
 			mainGroup = CE48B80F291BBA7F00B50DA0;
+			packageReferences = (
+				CE0050272927FA2A00908B41 /* XCRemoteSwiftPackageReference "KeyboardLayoutGuide" */,
+			);
 			productRefGroup = CE48B819291BBA7F00B50DA0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -345,17 +362,20 @@
 				CE48B81C291BBA7F00B50DA0 /* AppDelegate.swift in Sources */,
 				CE48B84D291BBAD400B50DA0 /* Validation.swift in Sources */,
 				CE36B68D2923D995001FE9D7 /* LoginViewController.swift in Sources */,
+				CE00502229267DB700908B41 /* ApiClient.swift in Sources */,
 				CE4D576429200E3E00AF41BD /* PersonalInfo.swift in Sources */,
 				CE4D5762292008B800AF41BD /* RequsitesTableViewCell.swift in Sources */,
 				CE4D5760292007F400AF41BD /* UserDetailsTableViewController.swift in Sources */,
 				CE4D5758291D117600AF41BD /* UsersTableViewController.swift in Sources */,
+				CE8ED30B292861E40011CF18 /* SignUpDetailsViewController.swift in Sources */,
 				CE4D575B291D11CD00AF41BD /* UserTableViewCell.swift in Sources */,
 				CE48B81E291BBA7F00B50DA0 /* SceneDelegate.swift in Sources */,
 				CE36B68F29244A5D001FE9D7 /* SignUpViewController.swift in Sources */,
 				CEBE9A6029227F3C00944A6E /* ProfileTableViewCell.swift in Sources */,
 				CE36B68B2923CAA3001FE9D7 /* UserDefaultsController.swift in Sources */,
+				CE0050242926C10F00908B41 /* DownloadUsers.swift in Sources */,
 				CE4D576629201F0A00AF41BD /* UserDetailsTableViewCell.swift in Sources */,
-				CE36B6882923B7D6001FE9D7 /* KeyChainClass.swift in Sources */,
+				CE36B6882923B7D6001FE9D7 /* KeyChainManager.swift in Sources */,
 				CE4D575E291D399800AF41BD /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -692,6 +712,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CE0050272927FA2A00908B41 /* XCRemoteSwiftPackageReference "KeyboardLayoutGuide" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/freshOS/KeyboardLayoutGuide";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CE0050282927FA2A00908B41 /* KeyboardLayoutGuide */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE0050272927FA2A00908B41 /* XCRemoteSwiftPackageReference "KeyboardLayoutGuide" */;
+			productName = KeyboardLayoutGuide;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CE48B810291BBA7F00B50DA0 /* Project object */;
 }
