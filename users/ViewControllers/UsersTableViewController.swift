@@ -11,6 +11,7 @@ import UIKit
 class UsersTableViewController: UITableViewController {
     var users: [User] = []
     
+    
     override func loadView() {
         super.loadView()
 //        let downloadUsers = DownloadUsers()
@@ -28,7 +29,9 @@ class UsersTableViewController: UITableViewController {
         tableView.rowHeight = 80
     }
     
-    
+    @IBAction func didChangeSegment(_ sender: Any) {
+        
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let userDetailsVC = storyboard?.instantiateViewController(withIdentifier: "UserDetailsTableViewController") as? UserDetailsTableViewController else {

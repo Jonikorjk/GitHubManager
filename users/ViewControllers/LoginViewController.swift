@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
             editingChangedPasswordTextField(nil)
             return
         }
-        guard let passwordData = KeyChainClass.read(service: "usersTable", account: emailTextField.text!) else {
+        guard let passwordData = KeyChainClass.read(service: Service.serviceName.rawValue, account: emailTextField.text!) else {
             errorNoSuchUser.isHidden = false
             return
         }

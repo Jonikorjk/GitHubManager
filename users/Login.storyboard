@@ -349,7 +349,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Nr-Hd-rzM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1330" y="433"/>
+            <point key="canvasLocation" x="1341" y="480"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ctE-Bk-Wk4">
@@ -528,7 +528,7 @@
                                                 </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.up" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="qYe-c0-589">
-                                                <rect key="frame" x="20" y="910" width="390" height="209"/>
+                                                <rect key="frame" x="20" y="910" width="390" height="208.66666666666663"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="qYe-c0-589" secondAttribute="height" multiplier="15:8" id="jaY-ar-eSs"/>
                                                 </constraints>

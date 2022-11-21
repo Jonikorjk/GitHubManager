@@ -55,6 +55,7 @@ class SignUpDetailsViewController: UIViewController {
         config.filter = .any(of: phpFilter)
         return config
     }
+    
     @IBAction func pressedSignUpButton(_ sender: Any) {
         if !Validation.nameValidator(firstNameTextField) ||
             !Validation.nameValidator(lastNameTextField) ||
