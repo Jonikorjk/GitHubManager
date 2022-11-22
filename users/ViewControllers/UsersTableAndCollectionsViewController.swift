@@ -12,7 +12,8 @@ class UsersTableAndCollectionsViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var segmentedControl: UISegmentedControl!
     @IBOutlet var collectionView: UICollectionView!
-        
+    private var countOfUsersInGroup = 2
+    private var offsetX: CGFloat = CGFloat(2)
     var users: [User] = []
 
     private func parseJSON(url: String, _ completiton: @escaping () -> Void) {
@@ -46,7 +47,9 @@ class UsersTableAndCollectionsViewController: UIViewController {
         super.viewDidLoad()
         collectionView.isHidden = true
         tableView.rowHeight = 80
-        let url = "https://randomuser.me/api/?results=107"
+        let url = "https://randomuser.me/api/?results=30"
+        collectionView.delegate = self
+        collectionView.dataSource = self
         parseJSON(url: url) {
             self.tableView.reloadData()
             self.collectionView.reloadData()
@@ -112,37 +115,20 @@ extension UsersTableAndCollectionsViewController: UITableViewDataSource, UITable
     }
 }
 
-extension UsersTableAndCollectionsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    
+extension UsersTableAndCollectionsViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath.section * 2 + indexPath.item) >= users.count {
-            return
-        }
-        guard let userDetailsVC = storyboard?.instantiateViewController(withIdentifier: "UserDetailsTableViewController") as? UserDetailsTableViewController else {
-            return
-        }
-        userDetailsVC.user = users[indexPath.section * 2 + indexPath.item]
+        let userDetailsVC = storyboard?.instantiateViewController(withIdentifier: "UserDetailsTableViewController") as! UserDetailsTableViewController
+        userDetailsVC.user = users[indexPath.item]
         navigationController?.pushViewController(userDetailsVC, animated: true)
     }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if (users.count % 2 != 0) {
-            return (users.count + 1) / 2
-        }
-        return users.count / 2
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return users.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if ((indexPath.section * 2 + indexPath.item) >= users.count) {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmptyCollectionCell", for: indexPath)
-            return cell
-        }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserCellCollectionView", for: indexPath) as! UserCollectionViewCell
-        let currentUser = users[indexPath.section * 2 + indexPath.item]
+        let currentUser = users[indexPath.item]
 
         cell.firstNameLabel.text = currentUser.name.first
         cell.lastNameLaber.text = currentUser.name.last
@@ -161,4 +147,22 @@ extension UsersTableAndCollectionsViewController: UICollectionViewDataSource, UI
         
         return cell
     }
+    
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        return CGFloat(10)
+//    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let frame = collectionView.frame
+        var width = (frame.width - CGFloat(30)) / CGFloat(countOfUsersInGroup)
+        var height = width
+        
+//        let spacesX = CGFloat(countOfUsersInGroup + 1) * offsetX / CGFloat(countOfUsersInGroup)
+        
+        return CGSize(width: width, height: height)
+    }
+    
+    
 }

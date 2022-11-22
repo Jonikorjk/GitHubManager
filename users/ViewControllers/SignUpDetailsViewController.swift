@@ -15,13 +15,17 @@ class SignUpDetailsViewController: UIViewController {
     @IBOutlet var phoneTextField: UITextField!
     @IBOutlet var cityTextField: UITextField!
     @IBOutlet var streetTextField: UITextField!
-
+    var currentTextField: UITextField? = nil
+    
+    @IBOutlet var scrollView: UIScrollView!
+    var histroryOffset: Double = 0
+    
     @IBOutlet var errorfirstNameLabel: UILabel!
     @IBOutlet var errorlastNameLabel: UILabel!
     @IBOutlet var errorPhoneNumberLabel: UILabel!
     @IBOutlet var errorCityLabel: UILabel!
     @IBOutlet var errorStreetLabel: UILabel!
-
+    
     @IBOutlet var birthdayDatePicker: UIDatePicker!
     
     @IBOutlet var photoImageView: UIImageView!
@@ -31,6 +35,26 @@ class SignUpDetailsViewController: UIViewController {
     
     // data from previous VC (SignUpViewController)
     var user: (email: String, password: String)?
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+            
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+           return
+        }
+                
+        if let activeTextField = currentTextField {
+            print("contentOffset y:\t", scrollView.contentOffset.y)
+            print("keyBoard minY:\t", keyboardSize.minY)
+            print("active tf frame maxY:\t", activeTextField.frame.maxY)
+            if activeTextField.frame.maxY - scrollView.contentOffset.y >= keyboardSize.minY {
+                view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y = 0
+    }
     
     private func convertImageToBase64String(image: UIImage) -> String? {
         return image.jpegData(compressionQuality: 1)?.base64EncodedString()
@@ -74,7 +98,7 @@ class SignUpDetailsViewController: UIViewController {
             let okAction = UIAlertAction(title: "Ok", style: .default)
             alert.addAction(okAction)
             present(alert, animated: true)
-            return             
+            return
         }
 
         let birthday = formatDate(datePicker: birthdayDatePicker)
@@ -137,6 +161,13 @@ class SignUpDetailsViewController: UIViewController {
         super.viewDidLoad()
         Validation.toHide(errorfirstNameLabel, errorlastNameLabel, errorCityLabel, errorPhoneNumberLabel, errorStreetLabel)
         birthdayDatePicker.contentHorizontalAlignment = .center
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        firstNameTextField.delegate = self
+        lastNameTextField.delegate = self
+        cityTextField.delegate = self
+        streetTextField.delegate = self
+        phoneTextField.delegate = self
     }
 }
 
@@ -157,5 +188,14 @@ func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPicke
                 }
              }
         }
+    }
+}
+
+extension SignUpDetailsViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        currentTextField = textField
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        currentTextField = nil
     }
 }
