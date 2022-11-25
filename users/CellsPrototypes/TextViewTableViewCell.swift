@@ -1,14 +1,14 @@
 //
-//  UserDetailsTableViewCell.swift
+//  TextViewTableViewCell.swift
 //  users
 //
-//  Created by User on 12.11.2022.
+//  Created by User on 22.11.2022.
 //
 
 import UIKit
 
-class UserDetailsTableViewCell: UITableViewCell {
-    @IBOutlet var info: UILabel!
+class TextViewTableViewCell: UITableViewCell {
+    @IBOutlet var additionalInfo: UITextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

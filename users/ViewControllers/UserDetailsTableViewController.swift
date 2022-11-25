@@ -9,45 +9,38 @@ import UIKit
 
 
 class UserDetailsTableViewController: UITableViewController {
-
     var user: User!
-    var sections: [UserDetailsSections] = [.fullNameAndPhoto, .birthday, .contactInfo, .adress]
-    
+    var convienceUser: UserClass!
+    var sections: [UserDetailsSections] = [.fullNameAndPhotoSection, .birthdaySection, .contactInfoSection, .adressSection]
     var userInfo: Dictionary<UserDetailsSections, [UserInfo:String]>!
-    
+    @IBOutlet var heartButton: UIBarButtonItem!
+        
     override func loadView() {
         super.loadView()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/YYYY"
-        let birthday = dateFormatter.string(from: user.dob.date)
-    
+        
         userInfo = [
-            .fullNameAndPhoto: [.birthday: ""], // for rowCount = 1 (check numberOfRowsInSection)
-            .birthday: [.birthday: birthday],
-            .contactInfo: [
-                .email: user.email,
-                .phone: user.phone
+            .fullNameAndPhotoSection: [.birthday: ""],
+            .birthdaySection: [.birthday: convienceUser.birthday],
+            .contactInfoSection: [
+                .email: convienceUser.email,
+                .phone: convienceUser.phone
             ],
-            .adress: [
-                .city: user.location.city,
-                .street: user.location.street.fullName,
+            .adressSection: [
+                .city: convienceUser.city,
+                .street: convienceUser.street
             ]
         ]
-//
-//        var smth: Dictionary<String, String> = [
-//            "login": user.login.username,
-//            "password": user.login.password,
-//            "birthday": birthday,
-//            "phone": user.phone,
-//            "email": user.email,
-//            "street": user.location.street.fullName,
-//            "city": user.location.city,
-//            "photo": user.picture.large,
-//            "firstName": user.name.first,
-//            "lastName": user.name.last
-//        ]
-//        let ud = UserDefaults.standard
-//        ud.set(smth, forKey: "userProfile")
+        
+    }
+    
+    @IBAction func pressedHeartButton(_ sender: Any) {
+        convienceUser.isFavorite = !convienceUser.isFavorite
+        if convienceUser.isFavorite {
+            heartButton.image = UIImage(systemName: "heart.fill")
+        } else {
+            heartButton.image = UIImage(systemName: "heart")
+        }
+        heartButton.tintColor = .systemPink
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -57,9 +50,14 @@ class UserDetailsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.isHidden = true
+        
+        if convienceUser.isFavorite {
+            heartButton.image = UIImage(systemName: "heart.fill")
+        } else {
+            heartButton.image = UIImage(systemName: "heart")
+        }
+        heartButton.tintColor = .systemPink
     }
-
-    // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -77,26 +75,15 @@ class UserDetailsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RequsitesTableViewCell", for: indexPath) as! RequsitesTableViewCell
-            cell.firstNameLabel.text = user.name.first
-            cell.lastNameLabel.text = user.name.last
+            cell.firstNameLabel.text = convienceUser.firstName
+            cell.lastNameLabel.text = convienceUser.lastName
             
-            guard let userPhotoUrl = URL(string: user.picture.large) else {
-                fatalError("failed to get url user's photo")
+            ApiClient.downloadUserImage(convienceUser.largePhoto) { dataImage in
+                cell.photoImageView.image = UIImage(data: dataImage)
             }
-            
-            let session = URLSession.shared
-            session.dataTask(with: userPhotoUrl) {data, _, _ in
-            guard let imageData = data else { return }
-            DispatchQueue.main.async {
-                cell.photoImageView.image = UIImage(data: imageData)
-            }
-                
-            }.resume()
             
             tableView.rowHeight = 150
             cell.isUserInteractionEnabled = false
@@ -116,51 +103,4 @@ class UserDetailsTableViewController: UITableViewController {
             return cell
         }
     }
-
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -7,6 +7,9 @@
 
 import Foundation
 
+protocol HttpRespone {
+}
+
 struct User: Codable {
     struct Name: Codable
     {

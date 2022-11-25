@@ -8,10 +8,11 @@
 import Foundation
 
 enum UserDetailsSections: String {
-    case fullNameAndPhoto = ""
-    case birthday = "Date of birth"
-    case contactInfo = "Contact info"
-    case adress = "Adress"
+    case fullNameAndPhotoSection = ""
+    case birthdaySection = "Date of birth"
+    case contactInfoSection = "Contact info"
+    case adressSection = "Adress"
+    case additionalInfoSection = "Additional info"
 }
 
 enum UserInfo: String {
@@ -23,6 +24,7 @@ enum UserInfo: String {
     case firstName
     case lastName
     case photoData
+    case additionalInfo
 }
 
 enum Service: String {

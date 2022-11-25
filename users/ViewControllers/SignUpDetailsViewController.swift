@@ -18,7 +18,6 @@ class SignUpDetailsViewController: UIViewController {
     var currentTextField: UITextField? = nil
     
     @IBOutlet var scrollView: UIScrollView!
-    var histroryOffset: Double = 0
     
     @IBOutlet var errorfirstNameLabel: UILabel!
     @IBOutlet var errorlastNameLabel: UILabel!
@@ -33,28 +32,11 @@ class SignUpDetailsViewController: UIViewController {
     
     @IBOutlet var photoPickerButton: UIButton!
     
+    @IBOutlet var additionalInfoTextView: UITextView!
+    
     // data from previous VC (SignUpViewController)
     var user: (email: String, password: String)?
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-            
-        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-           return
-        }
-                
-        if let activeTextField = currentTextField {
-            print("contentOffset y:\t", scrollView.contentOffset.y)
-            print("keyBoard minY:\t", keyboardSize.minY)
-            print("active tf frame maxY:\t", activeTextField.frame.maxY)
-            if activeTextField.frame.maxY - scrollView.contentOffset.y >= keyboardSize.minY {
-                view.frame.origin.y -= keyboardSize.height
-            }
-        }
-    }
-
-    @objc func keyboardWillHide(notification: NSNotification) {
-        view.frame.origin.y = 0
-    }
+        
     
     private func convertImageToBase64String(image: UIImage) -> String? {
         return image.jpegData(compressionQuality: 1)?.base64EncodedString()
@@ -78,6 +60,18 @@ class SignUpDetailsViewController: UIViewController {
         config.selectionLimit = selectionLimit
         config.filter = .any(of: phpFilter)
         return config
+    }
+    
+    private func configurateTextView(textView: UITextView) {
+        textView.text = "Your additional info :)"
+        textView.textColor = .lightGray
+        textView.textAlignment = .center
+    }
+    
+    private func setUpDelegateToSelf(textField: UITextField...) {
+        for v in textField {
+            v.delegate = self
+        }
     }
     
     @IBAction func pressedSignUpButton(_ sender: Any) {
@@ -122,7 +116,8 @@ class SignUpDetailsViewController: UIViewController {
             UserInfo.phone.rawValue: phoneTextField.text!,
             UserInfo.firstName.rawValue: firstNameTextField.text!,
             UserInfo.lastName.rawValue: lastNameTextField.text!,
-            UserInfo.photoData.rawValue: photoInStringFormat
+            UserInfo.photoData.rawValue: photoInStringFormat,
+            UserInfo.additionalInfo.rawValue: additionalInfoTextView.text!
         ]
         userDefaults.set(userData, forKey: Service.keyForUserDefaults.rawValue)
         KeyChainClass.save(password, service: Service.serviceName.rawValue, account: email)
@@ -157,23 +152,34 @@ class SignUpDetailsViewController: UIViewController {
         errorPhoneNumberLabel.isHidden = Validation.nameValidator(phoneTextField)
     }
     
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        if let activeTextField = currentTextField {
+
+            if activeTextField.frame.maxY - scrollView.contentOffset.y >= keyboardSize.minY {
+                view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y = 0
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         Validation.toHide(errorfirstNameLabel, errorlastNameLabel, errorCityLabel, errorPhoneNumberLabel, errorStreetLabel)
         birthdayDatePicker.contentHorizontalAlignment = .center
+        configurateTextView(textView: additionalInfoTextView)
+        setUpDelegateToSelf(textField: firstNameTextField, lastNameTextField, cityTextField, streetTextField, phoneTextField)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        firstNameTextField.delegate = self
-        lastNameTextField.delegate = self
-        cityTextField.delegate = self
-        streetTextField.delegate = self
-        phoneTextField.delegate = self
     }
 }
 
 extension SignUpDetailsViewController: PHPickerViewControllerDelegate {
 func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        dismiss(animated: true, completion: nil)
+    dismiss(animated: true, completion: nil)
     guard !results.isEmpty else {return }
         for result in results {
             let provider = result.itemProvider
@@ -197,5 +203,21 @@ extension SignUpDetailsViewController: UITextFieldDelegate {
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         currentTextField = nil
+    }
+}
+
+extension SignUpDetailsViewController: UITextViewDelegate {
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if additionalInfoTextView.text.isEmpty {
+            configurateTextView(textView: additionalInfoTextView)
+        }
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if additionalInfoTextView.textColor == .lightGray {
+            additionalInfoTextView.textColor = .darkText
+            additionalInfoTextView.textAlignment = .justified
+            additionalInfoTextView.text = ""
+        }
     }
 }
