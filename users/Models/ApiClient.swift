@@ -18,7 +18,6 @@ enum HttpMethod: String {
 class ApiClient {
     
     let baseUrl = "https://randomuser.me/api/"
-
     
     func request<T>(apiMethod: String, httpMethod: HttpMethod, parametrs: [String: String]?, headers: [String:String]?, success: @escaping (T) -> Void, failure: ((Error) -> Void)?) where T: Codable {
     

@@ -67,7 +67,6 @@ class SignUpViewController: UIViewController {
             editingChangerConfirmPasswordTextField(nil)
             return
         }
-        
         let loginUserDetailsVC = storyboard?.instantiateViewController(withIdentifier: "SignUpDetailsViewController") as! SignUpDetailsViewController
         navigationController?.pushViewController(loginUserDetailsVC, animated: true)
     }

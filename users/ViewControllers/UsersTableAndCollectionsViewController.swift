@@ -88,11 +88,9 @@ extension UsersTableAndCollectionsViewController: UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserCellCollectionView", for: indexPath) as! UserCollectionViewCell
         let currentUser = convienceUsers![indexPath.item]
-    
         cell.firstNameLabel.text = currentUser.firstName
         cell.lastNameLaber.text = currentUser.lastName
         cell.heartImageView.isHidden = !currentUser.isFavorite
-
         ApiClient.downloadUserImage(currentUser.largePhoto) { dataImage in
             cell.photoImageView.image = UIImage(data: dataImage)
         }
