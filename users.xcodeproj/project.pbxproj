@@ -14,6 +14,11 @@
 		CE0E0393292ADD0E00565AA5 /* UserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E0392292ADD0E00565AA5 /* UserCollectionViewCell.swift */; };
 		CE1B09D8292D0ABC00D88120 /* TextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B09D7292D0ABC00D88120 /* TextViewTableViewCell.swift */; };
 		CE1B09DA292D3C9D00D88120 /* UsersStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B09D9292D3C9D00D88120 /* UsersStorage.swift */; };
+		CE1B09E129310AE900D88120 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B09E029310AE900D88120 /* Coordinator.swift */; };
+		CE1B09E3293114AF00D88120 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B09E2293114AF00D88120 /* LoginCoordinator.swift */; };
+		CE1B09E62931177800D88120 /* SignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B09E52931177800D88120 /* SignUpCoordinator.swift */; };
+		CE1B09E82934B99600D88120 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B09E72934B99600D88120 /* MainCoordinator.swift */; };
+		CE1B09EA2934BA1300D88120 /* Storyboardable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B09E92934BA1300D88120 /* Storyboardable.swift */; };
 		CE36B6882923B7D6001FE9D7 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE36B6872923B7D6001FE9D7 /* KeyChainManager.swift */; };
 		CE36B68B2923CAA3001FE9D7 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE36B68A2923CAA3001FE9D7 /* UserDefaultsController.swift */; };
 		CE36B68D2923D995001FE9D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE36B68C2923D995001FE9D7 /* LoginViewController.swift */; };
@@ -36,6 +41,7 @@
 		CE4D576629201F0A00AF41BD /* UserDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4D576529201F0A00AF41BD /* UserDetailsTableViewCell.swift */; };
 		CE8ED30B292861E40011CF18 /* SignUpDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED30A292861E40011CF18 /* SignUpDetailsViewController.swift */; };
 		CEBE9A6029227F3C00944A6E /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBE9A5F29227F3C00944A6E /* ProfileTableViewCell.swift */; };
+		CEE9046F29391CAC00B5DD63 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9046E29391CAC00B5DD63 /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +68,11 @@
 		CE0E0392292ADD0E00565AA5 /* UserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE1B09D7292D0ABC00D88120 /* TextViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewTableViewCell.swift; sourceTree = "<group>"; };
 		CE1B09D9292D3C9D00D88120 /* UsersStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersStorage.swift; sourceTree = "<group>"; };
+		CE1B09E029310AE900D88120 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		CE1B09E2293114AF00D88120 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		CE1B09E52931177800D88120 /* SignUpCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCoordinator.swift; sourceTree = "<group>"; };
+		CE1B09E72934B99600D88120 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		CE1B09E92934BA1300D88120 /* Storyboardable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboardable.swift; sourceTree = "<group>"; };
 		CE36B6872923B7D6001FE9D7 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		CE36B68A2923CAA3001FE9D7 /* UserDefaultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
 		CE36B68C2923D995001FE9D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -86,8 +97,9 @@
 		CE4D5761292008B800AF41BD /* RequsitesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequsitesTableViewCell.swift; sourceTree = "<group>"; };
 		CE4D576329200E3E00AF41BD /* PersonalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfo.swift; sourceTree = "<group>"; };
 		CE4D576529201F0A00AF41BD /* UserDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsTableViewCell.swift; sourceTree = "<group>"; };
-		CE8ED30A292861E40011CF18 /* SignUpDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDetailsViewController.swift; sourceTree = "<group>"; };
+		CE8ED30A292861E40011CF18 /* SignUpDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDetailsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEBE9A5F29227F3C00944A6E /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		CEE9046E29391CAC00B5DD63 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +128,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE1B09E42931171A00D88120 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				CE1B09E029310AE900D88120 /* Coordinator.swift */,
+				CE1B09E2293114AF00D88120 /* LoginCoordinator.swift */,
+				CE1B09E52931177800D88120 /* SignUpCoordinator.swift */,
+				CE1B09E72934B99600D88120 /* MainCoordinator.swift */,
+				CE1B09E92934BA1300D88120 /* Storyboardable.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
 		CE36B6862923B7C0001FE9D7 /* KeyChain */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +179,8 @@
 		CE48B81A291BBA7F00B50DA0 /* users */ = {
 			isa = PBXGroup;
 			children = (
+				CEE9046D29391C8600B5DD63 /* Helpers */,
+				CE1B09E42931171A00D88120 /* Coordinators */,
 				CE36B6892923CA8A001FE9D7 /* UserDefaultsStorage */,
 				CE36B6862923B7C0001FE9D7 /* KeyChain */,
 				CE4D575C291D398700AF41BD /* Models */,
@@ -224,6 +250,14 @@
 				CE1B09D9292D3C9D00D88120 /* UsersStorage.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CEE9046D29391C8600B5DD63 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CEE9046E29391CAC00B5DD63 /* Helpers.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -370,18 +404,24 @@
 				CE00502229267DB700908B41 /* ApiClient.swift in Sources */,
 				CE4D576429200E3E00AF41BD /* PersonalInfo.swift in Sources */,
 				CE0E0391292A880600565AA5 /* UsersTableAndCollectionsViewController.swift in Sources */,
+				CE1B09E129310AE900D88120 /* Coordinator.swift in Sources */,
 				CE4D5762292008B800AF41BD /* RequsitesTableViewCell.swift in Sources */,
 				CE4D5760292007F400AF41BD /* UserDetailsTableViewController.swift in Sources */,
 				CE1B09D8292D0ABC00D88120 /* TextViewTableViewCell.swift in Sources */,
 				CE1B09DA292D3C9D00D88120 /* UsersStorage.swift in Sources */,
 				CE8ED30B292861E40011CF18 /* SignUpDetailsViewController.swift in Sources */,
 				CE4D575B291D11CD00AF41BD /* UserTableViewCell.swift in Sources */,
+				CE1B09E82934B99600D88120 /* MainCoordinator.swift in Sources */,
 				CE0E0393292ADD0E00565AA5 /* UserCollectionViewCell.swift in Sources */,
+				CE1B09E3293114AF00D88120 /* LoginCoordinator.swift in Sources */,
 				CE48B81E291BBA7F00B50DA0 /* SceneDelegate.swift in Sources */,
 				CE36B68F29244A5D001FE9D7 /* SignUpViewController.swift in Sources */,
 				CEBE9A6029227F3C00944A6E /* ProfileTableViewCell.swift in Sources */,
 				CE36B68B2923CAA3001FE9D7 /* UserDefaultsController.swift in Sources */,
 				CE0050242926C10F00908B41 /* DownloadUsers.swift in Sources */,
+				CE1B09E62931177800D88120 /* SignUpCoordinator.swift in Sources */,
+				CEE9046F29391CAC00B5DD63 /* Helpers.swift in Sources */,
+				CE1B09EA2934BA1300D88120 /* Storyboardable.swift in Sources */,
 				CE4D576629201F0A00AF41BD /* UserDetailsTableViewCell.swift in Sources */,
 				CE36B6882923B7D6001FE9D7 /* KeyChainManager.swift in Sources */,
 				CE4D575E291D399800AF41BD /* User.swift in Sources */,

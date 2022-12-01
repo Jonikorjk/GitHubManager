@@ -9,9 +9,9 @@ import UIKit
 
 
 class ProfileTableViewCell: UITableViewController {
-    var userInfo: Dictionary<UserDetailsSections, [UserInfo:String]>!
+    var userInfo: [UserDetailsSections: [UserInfo: String]]!
     var sections: [UserDetailsSections] = [.fullNameAndPhotoSection, .birthdaySection, .contactInfoSection, .adressSection, .additionalInfoSection]
-    var profile: Dictionary<String,String> = UserDefaults.standard.dictionary(forKey: Service.keyForUserDefaults.rawValue) as! Dictionary<String,String>
+    var profile: [String: String] = UserDefaults.standard.dictionary(forKey: Service.keyForUserDefaults.rawValue) as! Dictionary<String,String>
     
     private func convertBase64StringToImage(imageBase64String: String) -> UIImage? {
         guard let imageData = Data(base64Encoded: imageBase64String) else { return nil }
@@ -34,10 +34,6 @@ class ProfileTableViewCell: UITableViewController {
             ],
             .additionalInfoSection: [.additionalInfo: profile[UserInfo.additionalInfo.rawValue]!]
         ]
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {

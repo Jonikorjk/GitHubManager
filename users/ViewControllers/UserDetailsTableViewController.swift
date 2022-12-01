@@ -9,15 +9,13 @@ import UIKit
 
 
 class UserDetailsTableViewController: UITableViewController {
-    var user: User!
     var convienceUser: UserClass!
     var sections: [UserDetailsSections] = [.fullNameAndPhotoSection, .birthdaySection, .contactInfoSection, .adressSection]
-    var userInfo: Dictionary<UserDetailsSections, [UserInfo:String]>!
+    var userInfo: [UserDetailsSections: [UserInfo: String]]!
     @IBOutlet var heartButton: UIBarButtonItem!
         
     override func loadView() {
         super.loadView()
-        
         userInfo = [
             .fullNameAndPhotoSection: [.birthday: ""],
             .birthdaySection: [.birthday: convienceUser.birthday],
@@ -33,14 +31,14 @@ class UserDetailsTableViewController: UITableViewController {
         
     }
     
+    private func setHeartImage() {
+        heartButton.image = convienceUser.isFavorite ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        heartButton.tintColor = .systemPink
+    }
+    
     @IBAction func pressedHeartButton(_ sender: Any) {
         convienceUser.isFavorite = !convienceUser.isFavorite
-        if convienceUser.isFavorite {
-            heartButton.image = UIImage(systemName: "heart.fill")
-        } else {
-            heartButton.image = UIImage(systemName: "heart")
-        }
-        heartButton.tintColor = .systemPink
+        setHeartImage()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -50,13 +48,7 @@ class UserDetailsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.isHidden = true
-        
-        if convienceUser.isFavorite {
-            heartButton.image = UIImage(systemName: "heart.fill")
-        } else {
-            heartButton.image = UIImage(systemName: "heart")
-        }
-        heartButton.tintColor = .systemPink
+        setHeartImage()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -64,10 +56,7 @@ class UserDetailsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let info = userInfo[sections[section]] else {
-            return 0
-        }
-        return info.count
+        return userInfo[sections[section]]?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

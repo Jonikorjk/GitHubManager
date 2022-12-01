@@ -7,8 +7,12 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
 
+protocol LoginViewControllerDelegate {
+    func goNext() -> Void
+}
+
+class LoginViewController: UIViewController, Storyboardable {
     @IBOutlet var signInButton: UIButton!
     
     @IBOutlet var emailTextField: UITextField!
@@ -17,6 +21,8 @@ class LoginViewController: UIViewController {
     @IBOutlet var errorEmailLabel: UILabel!
     @IBOutlet var errorPasswordLabel: UILabel!
     @IBOutlet var errorNoSuchUser: UILabel!
+    
+    var delegate: LoginViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()

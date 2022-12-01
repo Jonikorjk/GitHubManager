@@ -77,7 +77,7 @@ extension UsersTableAndCollectionsViewController: UITableViewDataSource, UITable
 extension UsersTableAndCollectionsViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let userDetailsVC = storyboard?.instantiateViewController(withIdentifier: "UserDetailsTableViewController") as! UserDetailsTableViewController
-        userDetailsVC.convienceUser = convienceUsers![indexPath.row]
+        userDetailsVC.convienceUser = convienceUsers?[indexPath.row] ?? nil
         navigationController?.pushViewController(userDetailsVC, animated: true)
     }
 

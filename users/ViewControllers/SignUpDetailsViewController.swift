@@ -10,6 +10,13 @@ import PhotosUI
 
 class SignUpDetailsViewController: UIViewController {
     
+    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var birthdayDatePicker: UIDatePicker!
+    @IBOutlet var photoPickerButton: UIButton!
+    @IBOutlet var additionalInfoTextView: UITextView!
+    @IBOutlet var photoImageView: UIImageView!
+    var imageWasLoaded = false
+    
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
     @IBOutlet var phoneTextField: UITextField!
@@ -17,27 +24,15 @@ class SignUpDetailsViewController: UIViewController {
     @IBOutlet var streetTextField: UITextField!
     var currentTextField: UITextField? = nil
     
-    @IBOutlet var scrollView: UIScrollView!
-    
     @IBOutlet var errorfirstNameLabel: UILabel!
     @IBOutlet var errorlastNameLabel: UILabel!
     @IBOutlet var errorPhoneNumberLabel: UILabel!
     @IBOutlet var errorCityLabel: UILabel!
     @IBOutlet var errorStreetLabel: UILabel!
     
-    @IBOutlet var birthdayDatePicker: UIDatePicker!
-    
-    @IBOutlet var photoImageView: UIImageView!
-    var imageWasLoaded = false
-    
-    @IBOutlet var photoPickerButton: UIButton!
-    
-    @IBOutlet var additionalInfoTextView: UITextView!
-    
     // data from previous VC (SignUpViewController)
     var user: (email: String, password: String)?
         
-    
     private func convertImageToBase64String(image: UIImage) -> String? {
         return image.jpegData(compressionQuality: 1)?.base64EncodedString()
     }
@@ -68,12 +63,6 @@ class SignUpDetailsViewController: UIViewController {
         textView.textAlignment = .center
     }
     
-    private func setUpDelegateToSelf(textField: UITextField...) {
-        for v in textField {
-            v.delegate = self
-        }
-    }
-    
     @IBAction func pressedSignUpButton(_ sender: Any) {
         if !Validation.nameValidator(firstNameTextField) ||
             !Validation.nameValidator(lastNameTextField) ||
@@ -87,6 +76,7 @@ class SignUpDetailsViewController: UIViewController {
             editingChangedPhoneTextField("")
             return
         }
+        
         if !imageWasLoaded {
             let alert = UIAlertController(title: "Error!", message: "Please load your profile photo", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Ok", style: .default)
@@ -107,6 +97,7 @@ class SignUpDetailsViewController: UIViewController {
             return
         }
         
+        let additionalInfo = additionalInfoTextView.text == "Your additional info :)" ? "" : additionalInfoTextView.text!
         let userDefaults = UserDefaults.standard
         let userData = [
             UserInfo.email.rawValue: email,
@@ -117,7 +108,7 @@ class SignUpDetailsViewController: UIViewController {
             UserInfo.firstName.rawValue: firstNameTextField.text!,
             UserInfo.lastName.rawValue: lastNameTextField.text!,
             UserInfo.photoData.rawValue: photoInStringFormat,
-            UserInfo.additionalInfo.rawValue: additionalInfoTextView.text!
+            UserInfo.additionalInfo.rawValue: additionalInfo
         ]
         userDefaults.set(userData, forKey: Service.keyForUserDefaults.rawValue)
         KeyChainClass.save(password, service: Service.serviceName.rawValue, account: email)
@@ -125,7 +116,7 @@ class SignUpDetailsViewController: UIViewController {
     }
     
     @IBAction func pressedPhotoPickerButton(_ sender: Any) {
-        if imageWasLoaded == false {
+        if !imageWasLoaded {
             let picker = PHPickerViewController(configuration: configuratePHPicker(selectionLimit: 1, phpFilter: [.images]))
             picker.delegate = self
             present(picker, animated: true)
@@ -170,7 +161,7 @@ class SignUpDetailsViewController: UIViewController {
         Validation.toHide(errorfirstNameLabel, errorlastNameLabel, errorCityLabel, errorPhoneNumberLabel, errorStreetLabel)
         birthdayDatePicker.contentHorizontalAlignment = .center
         configurateTextView(textView: additionalInfoTextView)
-        setUpDelegateToSelf(textField: firstNameTextField, lastNameTextField, cityTextField, streetTextField, phoneTextField)
+        setUpDelegateToSelf(textFields: firstNameTextField, lastNameTextField, cityTextField, streetTextField, phoneTextField)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -179,7 +170,7 @@ class SignUpDetailsViewController: UIViewController {
 extension SignUpDetailsViewController: PHPickerViewControllerDelegate {
 func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
     dismiss(animated: true, completion: nil)
-    guard !results.isEmpty else {return }
+    guard !results.isEmpty else { return }
         for result in results {
             let provider = result.itemProvider
             if provider.canLoadObject(ofClass: UIImage.self) {
@@ -200,6 +191,7 @@ extension SignUpDetailsViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         currentTextField = textField
     }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         currentTextField = nil
     }
