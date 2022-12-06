@@ -126,7 +126,7 @@ extension UserProfileViewController: UITableViewDelegate, UITableViewDataSource 
         case Sections.profile.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "UserInfoTableViewCell", for: indexPath) as! UserInfoTableViewCell
             cell.nameLabel.text = user?.name ?? ""
-            cell.emailLabel.text = user?.login ?? ""
+            cell.emailLabel.text = user?.email ?? ""
             AF.request(user?.avatarUrl ?? "").response { response in
                 switch response.result {
                 case .success(let data):
