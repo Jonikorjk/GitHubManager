@@ -120,9 +120,18 @@
 		CEA1D757293FFB5400355804 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				CEA1D758293FFB7100355804 /* ConvertDateToString.swift */,
+				CEA1D746293E6D5A00355804 /* Factories */,
+				CEA1D75A2940059C00355804 /* Convert */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		CEA1D75A2940059C00355804 /* Convert */ = {
+			isa = PBXGroup;
+			children = (
+				CEA1D758293FFB7100355804 /* ConvertDateToString.swift */,
+			);
+			path = Convert;
 			sourceTree = "<group>";
 		};
 		CEE90470293E06ED00B5DD63 = {
@@ -149,7 +158,6 @@
 				CEA1D757293FFB5400355804 /* Helpers */,
 				CEE9047C293E06ED00B5DD63 /* AppDelegate.swift */,
 				CEE9047E293E06ED00B5DD63 /* SceneDelegate.swift */,
-				CEA1D746293E6D5A00355804 /* Factories */,
 				CEA1D752293F7C3B00355804 /* TableViewCells */,
 				CEA1D74B293F6CEE00355804 /* Models */,
 				CEA1D745293E6BDD00355804 /* ViewControllers */,
