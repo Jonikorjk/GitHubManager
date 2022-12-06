@@ -128,7 +128,6 @@
 		CEE90470293E06ED00B5DD63 = {
 			isa = PBXGroup;
 			children = (
-				CEA1D757293FFB5400355804 /* Helpers */,
 				CEE9047B293E06ED00B5DD63 /* GitHubManager */,
 				CEE9047A293E06ED00B5DD63 /* Products */,
 				B130C5C4496A02516CC6606B /* Pods */,
@@ -147,6 +146,7 @@
 		CEE9047B293E06ED00B5DD63 /* GitHubManager */ = {
 			isa = PBXGroup;
 			children = (
+				CEA1D757293FFB5400355804 /* Helpers */,
 				CEE9047C293E06ED00B5DD63 /* AppDelegate.swift */,
 				CEE9047E293E06ED00B5DD63 /* SceneDelegate.swift */,
 				CEA1D746293E6D5A00355804 /* Factories */,
