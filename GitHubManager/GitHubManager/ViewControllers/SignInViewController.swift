@@ -20,13 +20,13 @@ class SignInViewController: UIViewController {
         var textField = UITextField()
         textField.backgroundColor = .white
         textField.attributedPlaceholder = NSMutableAttributedString(string: "Input your token", attributes: [
-            NSAttributedString.Key.foregroundColor: UIColor.black,
+            NSAttributedString.Key.foregroundColor: UIColor(white: 0.5, alpha: 1),
         ])
         textField.placeholder = "Input your token"
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
         textField.backgroundColor = .darkGray
-        textField.textColor = .darkText
+        textField.textColor = UIColor(white: 0.6, alpha: 0.6)
         return textField
     }()
     
@@ -39,7 +39,7 @@ class SignInViewController: UIViewController {
         button.titleLabel?.font = UIFont(name: "System", size: 50)
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.6, green: 0.6, blue: 0.64, alpha: 0.25)
@@ -60,8 +60,14 @@ class SignInViewController: UIViewController {
                 switch success.statusCode {
                 case 200:
                     GitHubService.token = self.tokenTextField.text!
+                    let userProfileVC = UserProfileViewController()
+                    let navigationController = UINavigationController(rootViewController: userProfileVC)
+                    navigationController.modalPresentationStyle = .fullScreen
+                    navigationController.modalTransitionStyle = .crossDissolve
+                    self.present(navigationController, animated: true)
                 default:
                     self.present(AlertControllerFactory.createNotificationAlertController("Bad token", message: "Try another token"), animated: true)
+                    self.tokenTextField.text = ""
                 }
             case .failure(let error):
                 print(error.errorDescription ?? "")
