@@ -19,30 +19,34 @@ class SignInViewController: UIViewController {
     lazy var tokenTextField: UITextField = {
         var textField = UITextField()
         textField.backgroundColor = .white
-        textField.attributedPlaceholder = NSMutableAttributedString(string: "Input your token", attributes: [
-            NSAttributedString.Key.foregroundColor: UIColor(white: 0.5, alpha: 1),
-        ])
+//        textField.attributedPlaceholder = NSMutableAttributedString(string: "Input your token", attributes: [
+//            NSAttributedString.Key.foregroundColor: UIColor(white: 0.5, alpha: 1),
+//        ])
         textField.placeholder = "Input your token"
         textField.borderStyle = .roundedRect
+        textField.layer.borderWidth = 2
+        textField.layer.borderColor = CGColor(red: 0, green: 0, blue: 1, alpha: 0.5)
+        textField.layer.cornerRadius = 5
         textField.textAlignment = .center
-        textField.backgroundColor = .darkGray
-        textField.textColor = UIColor(white: 0.6, alpha: 0.6)
+//        textField.backgroundColor = .darkGray
+//        textField.textColor = UIColor(white: 0.6, alpha: 0.6)
         return textField
     }()
     
     lazy var signInButton: UIButton = {
         var button = UIButton(type: .system)
         button.layer.cornerRadius = 20
-        button.backgroundColor = .darkGray
-        button.setTitleColor(.darkText, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.tintColor = .white
         button.setTitle("Sign In", for: .normal)
-        button.titleLabel?.font = UIFont(name: "System", size: 50)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Plain", size: 30)
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.6, green: 0.6, blue: 0.64, alpha: 0.25)
+        view.backgroundColor = .white
+//        view.backgroundColor = UIColor(red: 0.6, green: 0.6, blue: 0.64, alpha: 0.25)
         layout()
         signInButton.addTarget(self, action: #selector(pressedSignInButton), for: .touchUpInside)
     }
@@ -71,6 +75,7 @@ class SignInViewController: UIViewController {
                 }
             case .failure(let error):
                 print(error.errorDescription ?? "")
+                self.present(AlertControllerFactory.createNotificationAlertController("Bad Internet Connection", message: "Timeout"), animated: true)
             }
         }
     }

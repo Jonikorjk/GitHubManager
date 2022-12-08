@@ -13,6 +13,26 @@ import Foundation
 //    "node_id": "MDEwOlJlcG9zaXRvcnkxMjk2MjY5",
 //    "name": "Hello-World",
 //    "full_name": "octocat/Hello-World",
+//    "owner": {
+//      "login": "octocat",
+//      "id": 1,
+//      "node_id": "MDQ6VXNlcjE=",
+//      "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+//      "gravatar_id": "",
+//      "url": "https://api.github.com/users/octocat",
+//      "html_url": "https://github.com/octocat",
+//      "followers_url": "https://api.github.com/users/octocat/followers",
+//      "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+//      "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+//      "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+//      "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+//      "organizations_url": "https://api.github.com/users/octocat/orgs",
+//      "repos_url": "https://api.github.com/users/octocat/repos",
+//      "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+//      "received_events_url": "https://api.github.com/users/octocat/received_events",
+//      "type": "User",
+//      "site_admin": false
+//    },
 //    "private": false,
 //    "html_url": "https://github.com/octocat/Hello-World",
 //    "description": "This your first repo!",
@@ -119,12 +139,36 @@ struct Repository: Codable {
     var isPrivate: Bool
     var updateDate: Date?
     var language: String?
+    var description: String?
+    var forksCount: Int
+    var starsCount: Int
+    var openIssuesCount: Int
+    var selfUrl: String
+    var owner: User
+    
     
     enum CodingKeys: String, CodingKey {
-        case name
+        case name = "name"
+        case language
+        case description
+        case owner = "owner"
         case fullName = "full_name"
         case isPrivate = "private"
         case updateDate = "updated_at"
-        case language
+        case forksCount = "forks_count"
+        case starsCount = "stargazers_count"
+        case openIssuesCount = "open_issues_count"
+        case selfUrl = "html_url"
+    }
+    
+    enum RepositoryType: String {
+        case Private = "private"
+        case Public = "public"
+    }
+    
+    enum addReadMe: String {
+        case yes
+        case no
     }
 }
+

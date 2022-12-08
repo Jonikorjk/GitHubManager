@@ -59,8 +59,8 @@ struct User: Codable {
     var login: String
     var id: Int
     var avatarUrl: String
-    var name: String
-    var location: String
+    var name: String?
+    var location: String?
     var email: String?
     
     enum CodingKeys: String, CodingKey {

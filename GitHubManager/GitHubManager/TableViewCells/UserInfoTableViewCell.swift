@@ -24,11 +24,21 @@ class UserInfoTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "add")
+        imageView.layer.cornerRadius = 45
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        var config = UIBackgroundConfiguration.listPlainCell()
+        config.strokeColor = .red
+        config.strokeWidth = 2
+        config.cornerRadius = 90
+        config.backgroundInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        backgroundConfiguration = config
+        contentView.clipsToBounds = true
+//        contentView.layer.masksToBounds = true
         layout()
     }
     
