@@ -132,7 +132,8 @@ class CreateRepositoryViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        getRequests()
+        getListOfGitIgnoreTemplatesRequest()
+        getCommonLicenses()
     }
     
     override func viewDidLoad() {
@@ -157,7 +158,9 @@ class CreateRepositoryViewController: UIViewController {
             switch response {
             case .success(let success):
                 switch success.statusCode {
-                case 201: self.navigationController?.popViewController(animated: true)
+                case 201:
+                    self.navigationController?.popViewController(animated: true)
+                    
                 default: self.present(AlertControllerFactory.createNotificationAlertController("Server Error", message: "Status code: \(success.statusCode)"), animated: true)
                 }
             case .failure(_): self.present(AlertControllerFactory.createNotificationAlertController("Error", message: "Failed to create repository. Try again"), animated: true)
@@ -165,7 +168,7 @@ class CreateRepositoryViewController: UIViewController {
         }
     }
     
-    private func getRequests() {
+    private func getListOfGitIgnoreTemplatesRequest() {
         provider.request(.getListGitIgnoreTemplates) { response in
             switch response {
             case .success(let success):
@@ -181,6 +184,9 @@ class CreateRepositoryViewController: UIViewController {
             case .failure(let error): print(error)
             }
         }
+    }
+    
+    private func getCommonLicenses() {
         provider.request(.getCommonLicenses) { response in
             switch response {
             case .success(let success):
@@ -200,102 +206,100 @@ class CreateRepositoryViewController: UIViewController {
         
     private func layout() {
         view.addSubview(repositoryNameLabel)
+        view.addSubview(repositoryNameTextField)
+        view.addSubview(repositoryDescriptionLabel)
+        view.addSubview(repositoryDescriptionTextView)
+        view.addSubview(repositoryVisabilityLabel)
+        view.addSubview(publicOrPrivateButton)
+        view.addSubview(addReadMeLabel)
+        view.addSubview(addReadMeButton)
+        view.addSubview(gitIgnoreTemplateLabel)
+        view.addSubview(gitIgnoreTemplateButton)
+        view.addSubview(licenseLabel)
+        view.addSubview(licenseButton)
+        view.addSubview(createRepositoryButton)
+
+
         repositoryNameLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
             make.height.equalTo(16)
         }
         
-        view.addSubview(repositoryNameTextField)
         repositoryNameTextField.snp.makeConstraints { make in
             make.top.equalTo(repositoryNameLabel.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(45)
         }
         
-        view.addSubview(repositoryDescriptionLabel)
         repositoryDescriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(repositoryNameTextField.snp.bottom).offset(30)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(16)
         }
         
-        view.addSubview(repositoryDescriptionTextView)
         repositoryDescriptionTextView.snp.makeConstraints { make in
             make.top.equalTo(repositoryDescriptionLabel.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(120)
         }
         
-        view.addSubview(repositoryVisabilityLabel)
         repositoryVisabilityLabel.snp.makeConstraints { make in
             make.top.equalTo(repositoryDescriptionTextView.snp.bottom).offset(40)
             make.leading.equalToSuperview().offset(16)
+            make.width.equalTo(100)
             make.height.equalTo(16)
         }
         
-        view.addSubview(publicOrPrivateButton)
         publicOrPrivateButton.snp.makeConstraints { make in
             make.centerY.equalTo(repositoryVisabilityLabel.snp.centerY)
-            make.width.equalTo(80)
             make.height.equalTo(35)
-            make.centerX.equalToSuperview()
-            make.leading.greaterThanOrEqualTo(repositoryVisabilityLabel.snp.trailing).offset(16)
-            make.trailing.lessThanOrEqualToSuperview().offset(-16)
+            make.leading.equalTo(repositoryVisabilityLabel.snp.trailing).offset(16)
+            make.trailing.equalToSuperview().offset(-16)
         }
         
-        view.addSubview(addReadMeLabel)
         addReadMeLabel.snp.makeConstraints { make in
             make.top.equalTo(repositoryVisabilityLabel.snp.bottom).offset(40)
             make.leading.equalToSuperview().offset(16)
             make.height.equalTo(16)
+            make.width.equalTo(100)
         }
         
-        view.addSubview(addReadMeButton)
         addReadMeButton.snp.makeConstraints { make in
-            make.leading.greaterThanOrEqualTo(addReadMeLabel.snp.trailing).offset(16)
-            make.width.equalTo(80)
+            make.leading.equalTo(addReadMeLabel.snp.trailing).offset(16)
             make.height.equalTo(35)
             make.centerY.equalTo(addReadMeLabel.snp.centerY)
-            make.centerX.equalToSuperview()
-            make.trailing.lessThanOrEqualToSuperview().offset(-16)
+            make.trailing.equalToSuperview().offset(-16)
         }
         
-        view.addSubview(gitIgnoreTemplateLabel)
         gitIgnoreTemplateLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)
             make.height.equalTo(18)
+            make.width.equalTo(100)
             make.top.equalTo(addReadMeLabel.snp.bottom).offset(40)
         }
         
-        view.addSubview(gitIgnoreTemplateButton)
         gitIgnoreTemplateButton.snp.makeConstraints { make in
-            make.width.equalTo(80)
             make.height.equalTo(35)
-            make.leading.greaterThanOrEqualTo(gitIgnoreTemplateLabel.snp.trailing).offset(4)
-            make.trailing.lessThanOrEqualToSuperview().offset(-16)
+            make.leading.equalTo(gitIgnoreTemplateLabel.snp.trailing).offset(16)
+            make.trailing.equalToSuperview().offset(-16)
             make.centerY.equalTo(gitIgnoreTemplateLabel.snp.centerY)
-            make.centerX.equalToSuperview()
         }
         
-        view.addSubview(licenseLabel)
         licenseLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)
             make.top.equalTo(gitIgnoreTemplateLabel.snp.bottom).offset(40)
             make.height.equalTo(16)
+            make.width.equalTo(100)
         }
         
-        view.addSubview(licenseButton)
         licenseButton.snp.makeConstraints { make in
-            make.width.equalTo(80)
             make.height.equalTo(35)
-            make.leading.greaterThanOrEqualTo(licenseLabel.snp.trailing).offset(4)
-            make.trailing.lessThanOrEqualToSuperview().offset(-16)
+            make.leading.equalTo(licenseLabel.snp.trailing).offset(16)
+            make.trailing.equalToSuperview().offset(-16)
             make.centerY.equalTo(licenseLabel.snp.centerY)
-            make.centerX.equalToSuperview()
         }
         
-        view.addSubview(createRepositoryButton)
         createRepositoryButton.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
             make.leading.trailing.equalToSuperview().inset(16)

@@ -11,35 +11,42 @@ import Alamofire
 class UserProfileViewController: UIViewController {
     lazy var tableView = UITableView()
     typealias Section = SectionsForProfile
-
     var sections: [Section] = [.profile, .repositories]
     var user: User?
     var repositories: [Repository]? {
         didSet {
-            repositories = repositories?.sorted { rep1, rep2 in
-                return rep1.updateDate ?? Date() > rep2.updateDate ?? Date() ? true : false
+            repositories = repositories?.sorted {
+                $0.updateDate ?? Date() > $1.updateDate ?? Date() ? true : false
             }
         }
     }
+    lazy var refreshControl = {
+        let refresh = UIRefreshControl()
+        refresh.addTarget(self, action: #selector(swipeRefresh), for: .allEvents)
+        return refresh
+    }()
     let provider = MoyaProvider<GitHubService>()
- 
-    override func viewWillAppear(_ animated: Bool) {
-        startRequests()
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.refreshControl = refreshControl
         tableView.register(UserInfoTableViewCell.self, forCellReuseIdentifier: "UserInfoTableViewCell")
         tableView.register(RepositoryTableViewCell.self, forCellReuseIdentifier: "RepositoryTableViewCell")
         tableView.separatorStyle = .none
-        startRequests()
+        getUserRequest()
+        getRepositoriesRequest()
         configurateNavigationController()
         layout()
     }
     
-    func startRequests() {
+    @objc private func swipeRefresh() {
+        getRepositoriesRequest()
+        tableView.refreshControl?.endRefreshing()
+    }
+    
+    func getUserRequest() {
         provider.request(.getUser) { response in
             switch response {
             case .success(let res):
@@ -51,7 +58,9 @@ class UserProfileViewController: UIViewController {
                 print(error.errorDescription!)
             }
         }
-        
+    }
+    
+    func getRepositoriesRequest() {
         provider.request(.getRepositoriesOfCurrentUser) { response in
             switch response {
             case .success(let res):
@@ -148,9 +157,6 @@ extension UserProfileViewController: UITableViewDelegate, UITableViewDataSource 
             return cell
         case Section.repositories.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryTableViewCell", for: indexPath) as! RepositoryTableViewCell
-            cell.contentView.layer.cornerRadius = 50
-            cell.contentView.layer.borderColor = CGColor(red: 1, green: 0, blue: 0, alpha: 1)
-            cell.contentView.layer.masksToBounds = true
             let currentRepository = repositories?[indexPath.row]
             cell.nameLabel.text = currentRepository?.name
             cell.languageLabel.text = currentRepository?.language

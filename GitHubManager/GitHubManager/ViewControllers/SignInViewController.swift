@@ -9,6 +9,8 @@ import SnapKit
 import Moya
 
 class SignInViewController: UIViewController {
+    let provider = MoyaProvider<GitHubService>()
+
     lazy var logoImageView: UIImageView = {
        var imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -19,17 +21,12 @@ class SignInViewController: UIViewController {
     lazy var tokenTextField: UITextField = {
         var textField = UITextField()
         textField.backgroundColor = .white
-//        textField.attributedPlaceholder = NSMutableAttributedString(string: "Input your token", attributes: [
-//            NSAttributedString.Key.foregroundColor: UIColor(white: 0.5, alpha: 1),
-//        ])
         textField.placeholder = "Input your token"
         textField.borderStyle = .roundedRect
         textField.layer.borderWidth = 2
         textField.layer.borderColor = CGColor(red: 0, green: 0, blue: 1, alpha: 0.5)
         textField.layer.cornerRadius = 5
         textField.textAlignment = .center
-//        textField.backgroundColor = .darkGray
-//        textField.textColor = UIColor(white: 0.6, alpha: 0.6)
         return textField
     }()
     
@@ -46,7 +43,6 @@ class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-//        view.backgroundColor = UIColor(red: 0.6, green: 0.6, blue: 0.64, alpha: 0.25)
         layout()
         signInButton.addTarget(self, action: #selector(pressedSignInButton), for: .touchUpInside)
     }
@@ -57,7 +53,6 @@ class SignInViewController: UIViewController {
             return
         }
         
-        let provider = MoyaProvider<GitHubService>()
         provider.request(.isUserInGitHubSystem(token: tokenTextField.text!)) { response in
             switch response {
             case .success(let success):
@@ -82,20 +77,21 @@ class SignInViewController: UIViewController {
     
     private func layout() {
         view.addSubview(logoImageView)
+        view.addSubview(signInButton)
+        view.addSubview(tokenTextField)
+        
         logoImageView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(30)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
             make.height.equalTo(250)
         }
         
-        view.addSubview(signInButton)
         signInButton.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-40)
             make.leading.trailing.equalToSuperview().inset(30)
             make.height.equalTo(70)
         }
         
-        view.addSubview(tokenTextField)
         tokenTextField.snp.makeConstraints { make in
             make.top.equalTo(logoImageView.snp.bottom).offset(50)
             make.leading.trailing.equalToSuperview().inset(30)

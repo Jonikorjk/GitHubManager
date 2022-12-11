@@ -10,27 +10,33 @@ import Moya
 class RepositoryDetailsViewController: UIViewController {
     typealias Section = SectionsForRepositoryDetails
     var keys: [AdditionalInfo] = [.stars, .forks, .issues]
+    lazy var actionsSheets = {
+        let actionSheet = UIAlertController(title: "What do you want?", message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Share", style: .default) { _ in
+            self.tappedShareButton()
+        })
+        actionSheet.addAction(UIAlertAction(title: "Open In Safari", style: .default) { _ in
+            self.tappedOpenBrowserButton()
+        })
+        actionSheet.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
+            self.tappedDeleteRepositoryButton()
+        })
+        return actionSheet
+    }()
     var values: [Int] = []
     var repository: Repository! // force-unwrap because when we tap on repository cell the repository already exists
     var provider = MoyaProvider<GitHubService>()
     var languagesForTable = [String]() {
         didSet {
-            languagesForTable = languagesForTable.sorted { l1, l2 in
-                return Double(l1.split(separator: " ")[1])! > Double(l2.split(separator: " ")[1])!
+            languagesForTable = languagesForTable.sorted {
+                Double($0.split(separator: " ")[1]) ?? Double() > Double($1.split(separator: " ")[1]) ?? Double()
             }
         }
     }
     var tableView = UITableView()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        layout()
-        addButtonsToBar()
-        tableView.register(NamedTableViewCell.self, forCellReuseIdentifier: "NamedTableViewCell")
-        tableView.register(AssosiateTableViewCell.self, forCellReuseIdentifier: "AssosiateTableViewCell")
-        values = [repository.starsCount, repository.forksCount, repository.openIssuesCount]
-        tableView.delegate = self
-        tableView.dataSource = self
+    override func loadView() {
+        super.loadView()
         provider.request(.getLanguagesOfRepository(owner: repository.owner.login, repo: repository.name)) { response in
             switch response {
             case .success(let response):
@@ -38,30 +44,35 @@ class RepositoryDetailsViewController: UIViewController {
                     let languages = try JSONDecoder().decode([String: Int].self, from: response.data)
                     self.languagesForTable = self.prepareLanguagesForTable(dict: languages)
                     self.tableView.reloadData()
-                } catch {
-                    print(error)
-                }
-            case .failure(let error):
-                print(error)
+                } catch { print(error) }
+            case .failure(let error): print(error)
             }
         }
     }
     
-    @objc func tappedOpenBrowserButton() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.register(NamedTableViewCell.self, forCellReuseIdentifier: "NamedTableViewCell")
+        tableView.register(AssosiateTableViewCell.self, forCellReuseIdentifier: "AssosiateTableViewCell")
+        addListOfActionsButton()
+        tableView.delegate = self
+        tableView.dataSource = self
+        values = [repository.starsCount, repository.forksCount, repository.openIssuesCount]
+        layout()
+    }
+    
+    func tappedOpenBrowserButton() {
         guard let url = URL(string: repository.selfUrl) else { return }
         UIApplication.shared.open(url)
     }
     
-    @objc func tappedDeleteRepositoryButton() {
+    func tappedDeleteRepositoryButton() {
         let alert = UIAlertController(title: "Warning", message: "Do you actually want to DELETE this repository?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .destructive) {_ in
             self.provider.request(.removeRepositoryOfCurrentUser(owner: self.repository.owner.login, repo: self.repository.name)) { response in
                 switch response {
-                case .success(let a):
-                    print(a)
-                    self.navigationController?.popViewController(animated: true)
-                case .failure(let err):
-                    print(err)
+                case .success(_): self.navigationController?.popViewController(animated: true)
+                case .failure(_): self.present(AlertControllerFactory.createNotificationAlertController("Bad Internet Connection", message: "Try Again"), animated: true)
                 }
             }
         })
@@ -69,24 +80,19 @@ class RepositoryDetailsViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    @objc func tappedShareButton() {
+    func tappedShareButton() {
         guard let url = URL(string: repository.selfUrl) else { return }
         let shareController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         present(shareController, animated: true)
     }
     
-    private func addButtonsToBar() {
-        let openBrowserButton = UIBarButtonItem(image: UIImage(named: "openBrowser"), style: .plain, target: self, action: #selector(tappedOpenBrowserButton))
-        openBrowserButton.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: -10, right: -10)
-        
-        let shareButton = UIBarButtonItem(image: UIImage(named: "share"), style: .plain, target: self, action: #selector(tappedShareButton))
-        shareButton.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: -10, right: -10)
-        
-        let deleteButton = UIBarButtonItem(image: UIImage(named: "trash"), style: .plain, target: self, action: #selector(tappedDeleteRepositoryButton))
-        deleteButton.tintColor = .red
-        deleteButton.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: -10, right: -10)
-        
-        navigationItem.rightBarButtonItems = [deleteButton, shareButton, openBrowserButton]
+    @objc private func pressedActionSheetButton() { present(actionsSheets, animated: true) }
+    
+    private func addListOfActionsButton() {
+        navigationItem.title = "Details"
+        let barButtonItem =  UIBarButtonItem(image: UIImage(named: "actions"), style: .plain, target: self, action: #selector(pressedActionSheetButton))
+        barButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: -10, right: -10)
+        navigationItem.rightBarButtonItem = barButtonItem
     }
     
     private func layout() {
@@ -97,26 +103,19 @@ class RepositoryDetailsViewController: UIViewController {
     }
         
     private func prepareLanguagesForTable(dict: [String: Int]) -> [String] {
-        let count = countOfRowsInProject(dict: dict)
+        let count = dict.reduce(0) { $0 + $1.value }
+        
+        func calculatePercentage(_ value: Int) -> String {
+            var result = Double(value * 100) / Double(count)
+            result = round(result, toNearest: 0.01)
+            return result.formatted()
+        }
+        
         var result: [String] = []
-        for (k, v) in dict {
-            result.append(k + ": " + calculatePercentage(count, v) + " %")
+        dict.forEach { k, v in
+            result.append(k + ": " + calculatePercentage(v) + " %")
         }
         return result
-    }
-    
-    private func countOfRowsInProject(dict: [String: Int]) -> Int {
-        var count = 0
-        for v in dict.values {
-            count += v
-        }
-        return count
-    }
-    
-    private func calculatePercentage(_ count: Int, _ value: Int) -> String {
-        var result = Double(value * 100) / Double(count)
-        result = round(result, toNearest: 0.01)
-        return result.formatted()
     }
 }
 
