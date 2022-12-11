@@ -17,6 +17,14 @@
 		CEA1D754293F7C6B00355804 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA1D753293F7C6B00355804 /* UserInfoTableViewCell.swift */; };
 		CEA1D756293FF80C00355804 /* RepositoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA1D755293FF80C00355804 /* RepositoryTableViewCell.swift */; };
 		CEA1D759293FFB7100355804 /* ConvertDateToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA1D758293FFB7100355804 /* ConvertDateToString.swift */; };
+		CEA1D75C29408E0700355804 /* RepositoryDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA1D75B29408E0700355804 /* RepositoryDetailsViewController.swift */; };
+		CEA1D75E2940B28700355804 /* NamedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA1D75D2940B28700355804 /* NamedTableViewCell.swift */; };
+		CEA1D7602940B41700355804 /* NamedCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA1D75F2940B41700355804 /* NamedCellFactory.swift */; };
+		CEA1D7622940BD1200355804 /* AdditionalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA1D7612940BD1200355804 /* AdditionalInfo.swift */; };
+		CEA1D7642940BDF900355804 /* AssosiateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA1D7632940BDF900355804 /* AssosiateTableViewCell.swift */; };
+		CEA1D7662940D18900355804 /* Rounder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA1D7652940D18900355804 /* Rounder.swift */; };
+		CEA1D7692941104700355804 /* CreateRepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA1D7682941104700355804 /* CreateRepositoryViewController.swift */; };
+		CEA1D76D2942406B00355804 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA1D76C2942406B00355804 /* License.swift */; };
 		CEE9047D293E06ED00B5DD63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9047C293E06ED00B5DD63 /* AppDelegate.swift */; };
 		CEE9047F293E06ED00B5DD63 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9047E293E06ED00B5DD63 /* SceneDelegate.swift */; };
 		CEE90481293E06ED00B5DD63 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE90480293E06ED00B5DD63 /* SignInViewController.swift */; };
@@ -34,6 +42,14 @@
 		CEA1D753293F7C6B00355804 /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		CEA1D755293FF80C00355804 /* RepositoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTableViewCell.swift; sourceTree = "<group>"; };
 		CEA1D758293FFB7100355804 /* ConvertDateToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertDateToString.swift; sourceTree = "<group>"; };
+		CEA1D75B29408E0700355804 /* RepositoryDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailsViewController.swift; sourceTree = "<group>"; };
+		CEA1D75D2940B28700355804 /* NamedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamedTableViewCell.swift; sourceTree = "<group>"; };
+		CEA1D75F2940B41700355804 /* NamedCellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamedCellFactory.swift; sourceTree = "<group>"; };
+		CEA1D7612940BD1200355804 /* AdditionalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalInfo.swift; sourceTree = "<group>"; };
+		CEA1D7632940BDF900355804 /* AssosiateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssosiateTableViewCell.swift; sourceTree = "<group>"; };
+		CEA1D7652940D18900355804 /* Rounder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rounder.swift; sourceTree = "<group>"; };
+		CEA1D7682941104700355804 /* CreateRepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRepositoryViewController.swift; sourceTree = "<group>"; };
+		CEA1D76C2942406B00355804 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
 		CEE90479293E06ED00B5DD63 /* GitHubManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE9047C293E06ED00B5DD63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEE9047E293E06ED00B5DD63 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +102,8 @@
 			children = (
 				CEE90480293E06ED00B5DD63 /* SignInViewController.swift */,
 				CEA1D749293F50C200355804 /* UserProfileViewController.swift */,
+				CEA1D75B29408E0700355804 /* RepositoryDetailsViewController.swift */,
+				CEA1D7682941104700355804 /* CreateRepositoryViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -94,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				CEA1D747293E6D8800355804 /* AlertControllerFactory.swift */,
+				CEA1D75F2940B41700355804 /* NamedCellFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -104,6 +123,8 @@
 				CEA1D74C293F6D1500355804 /* Sections.swift */,
 				CEA1D74E293F6D6700355804 /* User.swift */,
 				CEA1D750293F6D7100355804 /* Repository.swift */,
+				CEA1D7612940BD1200355804 /* AdditionalInfo.swift */,
+				CEA1D76C2942406B00355804 /* License.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -113,6 +134,8 @@
 			children = (
 				CEA1D753293F7C6B00355804 /* UserInfoTableViewCell.swift */,
 				CEA1D755293FF80C00355804 /* RepositoryTableViewCell.swift */,
+				CEA1D75D2940B28700355804 /* NamedTableViewCell.swift */,
+				CEA1D7632940BDF900355804 /* AssosiateTableViewCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -120,6 +143,7 @@
 		CEA1D757293FFB5400355804 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				CEA1D7672940D18F00355804 /* Rounder */,
 				CEA1D746293E6D5A00355804 /* Factories */,
 				CEA1D75A2940059C00355804 /* Convert */,
 			);
@@ -132,6 +156,14 @@
 				CEA1D758293FFB7100355804 /* ConvertDateToString.swift */,
 			);
 			path = Convert;
+			sourceTree = "<group>";
+		};
+		CEA1D7672940D18F00355804 /* Rounder */ = {
+			isa = PBXGroup;
+			children = (
+				CEA1D7652940D18900355804 /* Rounder.swift */,
+			);
+			path = Rounder;
 			sourceTree = "<group>";
 		};
 		CEE90470293E06ED00B5DD63 = {
@@ -284,13 +316,21 @@
 				CEA1D754293F7C6B00355804 /* UserInfoTableViewCell.swift in Sources */,
 				CEE90481293E06ED00B5DD63 /* SignInViewController.swift in Sources */,
 				CEA1D74F293F6D6700355804 /* User.swift in Sources */,
+				CEA1D7692941104700355804 /* CreateRepositoryViewController.swift in Sources */,
+				CEA1D75E2940B28700355804 /* NamedTableViewCell.swift in Sources */,
+				CEA1D7622940BD1200355804 /* AdditionalInfo.swift in Sources */,
+				CEA1D7642940BDF900355804 /* AssosiateTableViewCell.swift in Sources */,
+				CEA1D76D2942406B00355804 /* License.swift in Sources */,
 				CEA1D74D293F6D1500355804 /* Sections.swift in Sources */,
+				CEA1D7662940D18900355804 /* Rounder.swift in Sources */,
 				CEA1D759293FFB7100355804 /* ConvertDateToString.swift in Sources */,
 				CEE9047D293E06ED00B5DD63 /* AppDelegate.swift in Sources */,
 				CEA1D74A293F50C200355804 /* UserProfileViewController.swift in Sources */,
 				CEA1D756293FF80C00355804 /* RepositoryTableViewCell.swift in Sources */,
+				CEA1D7602940B41700355804 /* NamedCellFactory.swift in Sources */,
 				CEA1D744293E5D1C00355804 /* GitHubService.swift in Sources */,
 				CEE9047F293E06ED00B5DD63 /* SceneDelegate.swift in Sources */,
+				CEA1D75C29408E0700355804 /* RepositoryDetailsViewController.swift in Sources */,
 				CEA1D748293E6D8800355804 /* AlertControllerFactory.swift in Sources */,
 				CEA1D751293F6D7100355804 /* Repository.swift in Sources */,
 			);

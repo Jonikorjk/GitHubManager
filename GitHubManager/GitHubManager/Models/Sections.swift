@@ -7,7 +7,15 @@
 
 import Foundation
 
-enum Sections: Int {
+enum SectionsForProfile: Int {
     case profile
     case repositories
+}
+
+enum SectionsForRepositoryDetails: Int {
+    case name
+    case fullName
+    case description
+    case languages
+    case additionalInfo
 }
