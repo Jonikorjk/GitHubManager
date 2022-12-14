@@ -137,7 +137,7 @@ extension UserProfileViewController: UITableViewDelegate, UITableViewDataSource 
             navigationController?.pushViewController(repositoryDetailsVC, animated: true)
         default: print("nothing")
         }
-
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
